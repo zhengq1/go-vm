@@ -60,7 +60,7 @@ func (m *ScriptEngine) ExecuteScript(script []byte,push_only bool) (bool){
 	return true
 }
 
-func (engine *ScriptEngine) ExecuteOp (opcode OpCode,opReader *VmReader) (byte,error){
+func (engine *ScriptEngine) ExecuteOp (opcode OpCode,opReader *VmReader) (VMState,error){
 
 	engine.nOpCount++
 	if opcode > OP_16 && engine.nOpCount > MAXSTEPS {
