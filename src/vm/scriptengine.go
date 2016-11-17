@@ -60,6 +60,19 @@ func (m *ScriptEngine) ExecuteScript(script []byte,push_only bool) (bool){
 	return true
 }
 
+func (engine *ScriptEngine) Dispose(){
+	//TODO
+}
+
+func (engine *ScriptEngine) Execute(){
+	//TODO
+}
+
+func ExecuteStep(){
+	//TODO
+}
+
+
 func (engine *ScriptEngine) ExecuteOp (opcode OpCode,opReader *VmReader) (VMState,error){
 
 	engine.nOpCount++
@@ -854,3 +867,11 @@ func (engine *ScriptEngine) ExecuteOp (opcode OpCode,opReader *VmReader) (VMStat
 	return NONE,nil
 }
 
+func LoadScript(script []byte)(){
+
+}
+
+func RemoveBreakPoint(posiiton uint) bool{
+	//TODO
+	return false
+}
