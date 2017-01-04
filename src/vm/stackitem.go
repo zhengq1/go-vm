@@ -127,15 +127,25 @@ func (si *StackItem) Except(item *StackItem) *StackItem {
 
 func (si *StackItem) Take(count int) *StackItem {
 
-	if si.Count() <= count {return si}
-	si.array = si.array[0:count-1]
+	// 参数小于零错误
+	if ( count < 0 ) {count = 0}
+
+	if ( count >= si.Count() ) {return si}
+	//si.array = si.array[0:count-1]
+	si.array = si.array[0:count]      // Unit Test modify
 	return  si
 
 }
 
 func (si *StackItem) Skip(count int) *StackItem {
-	si.array = si.array[count-1 : ]
-	return si
+	if ( count >= 0 && count <= si.Count() ) {
+		//si.array = si.array[count-1 : ]
+		si.array = si.array[count: ]     // Unit Test modify
+		return si
+	}
+
+	// 错误的参数，返回原数组
+	return si;
 }
 
 func (si *StackItem) ElementAt(index int) *StackItem {

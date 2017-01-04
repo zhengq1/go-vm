@@ -12,10 +12,16 @@ func (c BigIntSorter) Len() int {
 	return len(c)
 }
 func (c BigIntSorter) Swap(i, j int) {
-	c[i], c[j] = c[j], c[i]
+	if ( i >= 0 && i < len(c) && j >= 0 && j < len(c) ){  // Unit Test modify
+		c[i], c[j] = c[j], c[i]
+	}
 }
 func (c BigIntSorter) Less(i, j int) bool {
-	return c[i].Cmp(&c[j]) < 0
+	if ( i >= 0 && i < len(c) && j >= 0 && j < len(c) ) {   // Unit Test modify
+		return c[i].Cmp(&c[j]) < 0
+	}
+
+	return false
 }
 
 
@@ -55,13 +61,10 @@ func MaxBigInt(ints []big.Int) big.Int{
 func MinInt64(datas []int64) int64 {
 
 	var minimum int64
-	i := 0
-	for _, d := range datas {
+	for i, d := range datas {  // Unit Test modify
 		if i == 0 {
 			minimum = d
-			i++
 		}
-		continue
 		if d < minimum {
 			minimum = d
 		}
@@ -72,30 +75,28 @@ func MinInt64(datas []int64) int64 {
 
 func MaxInt64(datas []int64) int64 {
 
-	var minimum int64
-	i := 0
-	for _, d := range datas {
+	var maximum int64
+	//i := 0
+	for i, d := range datas {   // Unit Test modify
 		if i == 0 {
-			minimum = d
-			i++
+			maximum = d
+			//i++
 		}
-		continue
-		if d > minimum {
-			minimum = d
+		if d > maximum {
+			maximum = d
 		}
 	}
 
-	return minimum
+	return maximum
 }
 
 func Concat(array1 []byte, array2 []byte) []byte {
-	var narr []byte
 	len := len(array2)
-	for i:=1; i<len; i++ {
-		narr = append(array1, array2[i])
+	for i:=0; i<len; i++ {
+		array1 = append(array1, array2[i])   // Unit Test modify
 	}
 
-	return narr
+	return array1
 }
 
 func BigIntsOp(bigints []big.Int, op OpCode) []big.Int{
@@ -186,7 +187,8 @@ func ByteArrZip (s1 [][]byte, s2 [][]byte, op OpCode) [][]byte{
 	ns := [][]byte{}
 	switch op {
 	case OP_CONCAT:
-		for i:=1; i<len; i++ {
+		//for i:=1; i<len; i++ {
+		for i:=0; i<len; i++ {              // Unit Test modify
 			nsi := Concat(s1[i],s2[i])
 			ns = append(ns,nsi)
 		}

@@ -4,6 +4,7 @@ import (
 	"io"
 	"sort"
 	"math/big"
+	"fmt"
 )
 
 const MAXSTEPS  int = 1200
@@ -17,18 +18,23 @@ func NewScriptEngine(service IApiService,crypto ICrypto,table IScriptTable,signa
 	engine.signable = signable
 	engine.stack =  new(OpStack)
 	engine.altStack = new(OpStack)
-
+	engine.script_stack = new(ScStack)
+	//engine.executingScript = engine.script_stack.Peek().Script
+	engine.state = BREAK
 	return &engine
 }
 
 type ScriptEngine struct  {
-	service IApiService
 	crypto ICrypto
 	table IScriptTable
+	service IApiService
 	signable ISignableObject
+	script_stack *ScStack
 	nOpCount int
 	stack *OpStack
 	altStack *OpStack
+	executingScript []byte
+	state VMState
 }
 
 func (m *ScriptEngine) ExecuteScript(script []byte,push_only bool) (bool){
@@ -153,7 +159,9 @@ func (engine *ScriptEngine) ExecuteOp (opcode OpCode,opReader *VmReader) (VMStat
 	case OP_RET:
 		if engine.stack.Count() < 2 {return FAULT,nil}
 		stackItem := engine.stack.Pop()
+		fmt.Println( "stackItem:", stackItem )
 		position := engine.stack.Pop().ToBigInt().Int64()
+		fmt.Println( "position:", position )
 		if position < 0 || position > int64(opReader.Length()){
 			return  FAULT,nil
 		}
