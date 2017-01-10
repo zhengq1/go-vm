@@ -22,7 +22,7 @@ func (si *StackItem) Count() int {
 
 }
 
-func (si *StackItem) Hash(op OpCode,vm *ScriptEngine) [][]byte {
+func (si *StackItem) Hash(op OpCode,vm *ExecutionEngine) [][]byte {
 	r := si.GetBytesArray()
 
 	nr := [][]byte{}

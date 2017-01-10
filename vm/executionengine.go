@@ -10,8 +10,8 @@ import (
 const MAXSTEPS  int = 1200
 
 
-func NewScriptEngine(service IApiService,crypto ICrypto,table IScriptTable,signable ISignableObject) *ScriptEngine {
-	var engine ScriptEngine
+func NewExecutionEngine(service IApiService,crypto ICrypto,table IScriptTable,signable ISignableObject) *ExecutionEngine {
+	var engine ExecutionEngine
 	engine.service = service
 	engine.crypto = crypto
 	engine.table = table
@@ -24,7 +24,7 @@ func NewScriptEngine(service IApiService,crypto ICrypto,table IScriptTable,signa
 	return &engine
 }
 
-type ScriptEngine struct  {
+type ExecutionEngine struct  {
 	crypto ICrypto
 	table IScriptTable
 	service IApiService
@@ -37,7 +37,7 @@ type ScriptEngine struct  {
 	state VMState
 }
 
-func (m *ScriptEngine) ExecuteScript(script []byte,push_only bool) (bool){
+func (m *ExecutionEngine) ExecuteScript(script []byte,push_only bool) (bool){
 
 	opReader := new(VmReader)
 	//opReader := bufio.NewReader(bytes.NewReader(script))
@@ -66,11 +66,11 @@ func (m *ScriptEngine) ExecuteScript(script []byte,push_only bool) (bool){
 	return true
 }
 
-func (engine *ScriptEngine) Dispose(){
+func (engine *ExecutionEngine) Dispose(){
 	//TODO
 }
 
-func (engine *ScriptEngine) Execute(){
+func (engine *ExecutionEngine) Execute(){
 	//TODO
 }
 
@@ -79,7 +79,7 @@ func ExecuteStep(){
 }
 
 
-func (engine *ScriptEngine) ExecuteOp (opcode OpCode,opReader *VmReader) (VMState,error){
+func (engine *ExecutionEngine) ExecuteOp (opcode OpCode,opReader *VmReader) (VMState,error){
 
 	engine.nOpCount++
 	if opcode > OP_16 && engine.nOpCount > MAXSTEPS {

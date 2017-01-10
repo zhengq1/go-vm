@@ -5,14 +5,14 @@ import (
 	"testing"
 )
 
-func TestScriptEngine(t *testing.T) {
+func TestExecutionEngine(t *testing.T) {
 	var service IApiService
 	var crypto ICrypto
 	var table IScriptTable
 	var signable ISignableObject
 
-	se := NewScriptEngine( service, crypto, table, signable )
-	t.Log( "NewScriptEngine() test:", se )
+	se := NewExecutionEngine( service, crypto, table, signable )
+	t.Log( "NewExecutionEngine() test:", se )
 
 	vr := NewVmReader( []byte{0x1,0x2,0x3,0x4,0x5,0x6,0x7,0x8,0x9,0xA,0xB,0xC,0xD,0xE,0xF,0x10,0x11,0x12,0x13} )
 	se.ExecuteOp( OP_PUSHDATA1, vr )
@@ -31,15 +31,15 @@ func TestScriptEngine(t *testing.T) {
 }
 
 /*
-func ExampleScriptEngine(){
+func ExampleExecutionEngine(){
 
 	var service IApiService
 	var crypto ICrypto
 	var table IScriptTable
 	var signable ISignableObject
 
-	se := NewScriptEngine( service, crypto, table, signable )
-	fmt.Println( "NewScriptEngine() test:", se )
+	se := NewExecutionEngine( service, crypto, table, signable )
+	fmt.Println( "NewExecutionEngine() test:", se )
 
 	vr := NewVmReader( []byte{0x1,0x2,0x3,0x4,0x5,0x6,0x7,0x8,0x9,0xA,0xB,0xC,0xD,0xE,0xF,0x10,0x11,0x12,0x13} )
 	se.ExecuteOp( OP_PUSHDATA1, vr )
